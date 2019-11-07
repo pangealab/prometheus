@@ -66,6 +66,7 @@ Prometheus will look in your namespace for Pods tagged using `monitor=true` Tags
     * Type: `Prometheus`
     * URL: `YOUR PROMETHEUS URL` (e.g. http://prometheus-sandbox.openshift.sytes.net)
 
+
     >NOTE: Leave all other fields defaulted
 
     Lastly, press **Save and Test**
