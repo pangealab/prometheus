@@ -62,13 +62,13 @@ Prometheus will look in your namespace for Pods tagged using `monitor=true` Tags
 
     Use the following field values:
 
+    >NOTE: Leave all other fields defaulted
+
     * Name: `YOUR NAMESPACE` (e.g. *sandbox*)
     * Type: `Prometheus`
     * URL: `YOUR PROMETHEUS URL` (e.g. http://prometheus-sandbox.openshift.sytes.net)
 
-
-    >NOTE: Leave all other fields defaulted
-
     Lastly, press **Save and Test**
+
 
 
