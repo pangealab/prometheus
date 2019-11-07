@@ -71,5 +71,3 @@ Prometheus will look in your namespace for Pods tagged using `monitor=true` Tags
     Lastly, press **Save and Test**
 
 
-
-
