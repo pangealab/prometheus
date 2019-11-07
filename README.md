@@ -46,4 +46,5 @@ Prometheus will look in your namespace for Pods tagged using `monitor=true` Tags
 
     ```
     oc delete all -l app=prometheus
+    oc delete configmap -l app=prometheus
     ```
