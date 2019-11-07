@@ -10,6 +10,7 @@ Prometheus will look in your namespace for Pods tagged using `monitor=true` Tags
 
 * OKD Cluster Admin Access
 * OKD Namespace (e.g. *sandbox*)
+* Deployed Pods ready to be monitored
 
 # Installation
 
@@ -38,9 +39,13 @@ Prometheus will look in your namespace for Pods tagged using `monitor=true` Tags
     oc new-app -f templates/deploy-prometheus.yml -p POD_NAME=prometheus -p NAMESPACE=sandbox
     ```
 
+1. Test Access
+
+    Browse to your Pod's URL (e.g. http://prometheus-sandbox.openshift.sytes.net)
+
 # Teardown
 
-1. To delete Pod (e.g. *prometheus*) and related resources use:
+1. To delete the Pod (e.g. *prometheus*) and related resources use:
 
     >NOTE: Use Caution
 
@@ -48,3 +53,23 @@ Prometheus will look in your namespace for Pods tagged using `monitor=true` Tags
     oc delete all -l app=prometheus
     oc delete configmap -l app=prometheus
     ```
+
+# Configure Grafana
+
+1. Connect to [Grafana](https://grafana-openshift-monitoring.openshift.sytes.net)
+
+1. Navigate to `Configuration > Datasources` and click on **Add a datasource** 
+
+    Use the following field values:
+
+    * Name: `YOUR NAMESPACE` (e.g. *sandbox*)
+    * Type: `Prometheus`
+    * URL: `YOUR PROMETHEUS URL` (e.g. http://prometheus-sandbox.openshift.sytes.net)
+
+    >NOTE: Leave all other fields defaulted
+
+    Lastly, press **Save and Test**
+
+
+
+
