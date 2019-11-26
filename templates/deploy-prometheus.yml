@@ -66,36 +66,41 @@ objects:
     name: ${POD_NAME}
   data:
     prometheus.yml: |
-      # Global Properties
-      global:
-        scrape_interval: 30s
-        scrape_timeout: 10s
-        evaluation_interval: 30s
-      # Alerting Properties  
-      alerting:
-        alertmanagers:
-        - static_configs:
-          - targets: []
-          scheme: http
-          timeout: 10s
-      # Scraping Properties
-      scrape_configs:
-      - job_name: prometheus
-        scrape_interval: 10s
-        scrape_timeout: 5s
-        metrics_path: /actuator/prometheus
+    # Global Properties
+    global:
+      scrape_interval: 30s
+      scrape_timeout: 10s
+      evaluation_interval: 30s
+    # Alerting Properties  
+    alerting:
+      alertmanagers:
+      - static_configs:
+        - targets: []
         scheme: http
-        kubernetes_sd_configs:
-        - api_server: null
-          role: endpoints
-          namespaces:
-            names:
-              - ${NAMESPACE}
-        relabel_configs:
-          # Look for monitor=true tags
-          - source_labels: [__meta_kubernetes_service_label_monitor]
-            regex: true
-            action: keep
+        timeout: 10s
+    # Scraping Properties
+    scrape_configs:
+    - job_name: prometheus
+      scrape_interval: 10s
+      scrape_timeout: 5s
+      metrics_path: /actuator/prometheus
+      scheme: http
+      kubernetes_sd_configs:
+      - api_server: null
+        role: endpoints
+        namespaces:
+          names:
+            - sandbox
+      relabel_configs:
+        - source_labels: [__meta_kubernetes_service_label_monitor]
+          regex: true
+          action: keep
+        - source_labels: [__meta_kubernetes_pod_label_app]
+          separator: ;
+          regex: (.*)
+          target_label: app
+          replacement: $1
+          action: replace
 ################################################################################
 #                         Deployment Configuration                             #
 ################################################################################
