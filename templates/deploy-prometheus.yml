@@ -71,14 +71,12 @@ objects:
         scrape_interval: 30s
         scrape_timeout: 10s
         evaluation_interval: 30s
-      # Alerting Properties  
       alerting:
         alertmanagers:
         - static_configs:
           - targets: []
           scheme: http
           timeout: 10s
-      # Scraping Properties
       scrape_configs:
       - job_name: prometheus
         scrape_interval: 10s
@@ -90,12 +88,19 @@ objects:
           role: endpoints
           namespaces:
             names:
-              - ${NAMESPACE}
+            - ${NAMESPACE}
         relabel_configs:
-          # Look for monitor=true tags
-          - source_labels: [__meta_kubernetes_service_label_monitor]
-            regex: true
-            action: keep
+        - source_labels: [__meta_kubernetes_service_label_monitor]
+          separator: ;
+          regex: "true"
+          replacement: $1
+          action: keep
+        - source_labels: [__meta_kubernetes_pod_label_app]
+          separator: ;
+          regex: (.*)
+          target_label: app
+          replacement: $1
+          action: replace            
 ################################################################################
 #                         Deployment Configuration                             #
 ################################################################################
